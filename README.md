@@ -3,8 +3,6 @@
 This is an Elixir package that wrapps any NDC-compliant API.
 It's host-agnostic and quite flexible-through-configuration so that it can reach NDC hosts with a certain flexibility.
 
-**TODO: Add description**
-
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
