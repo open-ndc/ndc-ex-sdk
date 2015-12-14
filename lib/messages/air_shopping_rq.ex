@@ -1,4 +1,4 @@
-defmodule NDCEx.AirShoppingRQ do
+defmodule NDCEx.Messages.AirShoppingRQ do
 	require Record
 	Record.defrecord :xmlElement, Record.extract(:xmlElement, from_lib: "xmerl/include/xmerl.hrl")
 	Record.defrecord :xmlText,    Record.extract(:xmlText,    from_lib: "xmerl/include/xmerl.hrl")
