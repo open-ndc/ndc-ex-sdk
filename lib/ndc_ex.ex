@@ -15,6 +15,6 @@ defmodule NDCEx do
   end
 
   def parse_xml({xml, _}) do
-    NDCEx.AirShoppingRQ.yield_core_query(xml)
+    NDCEx.Messages.AirShoppingRQ.yield_core_query(xml)
   end
 end

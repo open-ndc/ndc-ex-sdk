@@ -5,18 +5,21 @@ defmodule NDCEx.Messages.AirShoppingRQ do
 	
 	def yield_core_query(xml) do
 		# single element
-		departure_code  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/Departure/AirportCode', xml)
-		departure_date  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/Departure/Date', xml)
+		test  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/Departure', xml)
 
-		arrival_airport_code  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/Arrival/AirportCode', xml)
-		arrival_date  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/Arrival/Date', xml)
+		#departure_code  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/Departure/AirportCode', xml)
+		#departure_date  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/Departure/Date', xml)
 
-		marketing_carrier_airline_id  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/MarketingCarrierAirline/AirlineID', xml)
-		marketing_carrier_airline_name  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/MarketingCarrierAirline/Name', xml)
+		#arrival_airport_code  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/Arrival/AirportCode', xml)
+		#arrival_date  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/Arrival/Date', xml)
+
+		#marketing_carrier_airline_id  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/MarketingCarrierAirline/AirlineID', xml)
+		#marketing_carrier_airline_name  = :xmerl_xpath.string('CoreQuery/OriginDestinations/OriginDestination/MarketingCarrierAirline/Name', xml)
+
 		IO.puts '\n'
 		IO.puts '\n'
 		IO.puts '\n'
-		IO.puts arrival_date
+		IO.puts test
 		IO.puts '\n'
 		IO.puts '\n'
 		IO.puts '\n'
