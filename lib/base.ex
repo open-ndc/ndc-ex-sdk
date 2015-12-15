@@ -3,7 +3,7 @@ defmodule NDCEx.Base do
   Record.defrecord :xmlElement, Record.extract(:xmlElement, from_lib: "xmerl/include/xmerl.hrl")
   Record.defrecord :xmlText,    Record.extract(:xmlText,    from_lib: "xmerl/include/xmerl.hrl")
 
-  defp parse(node) do
+  defp parse_node(node) do
     cond do
       Record.is_record(node, :xmlElement) ->
         name    = xmlElement(node, :name)
@@ -32,5 +32,5 @@ defmodule NDCEx.Base do
     end
   end
 
-  def yeild(elements), do: Enum.map(elements, &(parse(xmlElement(&1, :content))))
+  def yeild(elements), do: Enum.map(elements, &(parse_node(xmlElement(&1, :content))))
 end
