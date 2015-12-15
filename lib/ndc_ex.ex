@@ -12,7 +12,9 @@ defmodule NDCEx do
   end
 
   def parse_xml({xml, _}) do
-    data = NDCEx.Messages.AirShoppingRQ.yield_core_query(xml)
+    data = xml
+    |> NDCEx.Messages.AirShoppingRQ.yield_core_query
+    |> XmlBuilder.generate
     IO.inspect data
   end
 end
