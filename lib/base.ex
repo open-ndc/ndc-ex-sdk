@@ -8,13 +8,13 @@ defmodule NDCEx.Base do
       Record.is_record(node, :xmlElement) ->
         name    = xmlElement(node, :name)
         content = xmlElement(node, :content)
-        Map.put(%{}, name, parse(content))
+        Map.put(%{}, name, parse_node(content))
 
       Record.is_record(node, :xmlText) ->
         xmlText(node, :value) |> to_string
 
       is_list(node) ->
-        case Enum.map(node, &(parse(&1))) do
+        case Enum.map(node, &(parse_node(&1))) do
           [text_content] when is_binary(text_content) ->
             text_content
 
