@@ -1,7 +1,4 @@
 defmodule NDCEx do
-  require Record
-  Record.defrecord :xmlElement, Record.extract(:xmlElement, from_lib: "xmerl/include/xmerl.hrl")
-  Record.defrecord :xmlText,    Record.extract(:xmlText,    from_lib: "xmerl/include/xmerl.hrl")
 
   def parse do
     file_name = 'requests/Athena/OneWay/AirShoppingRQ - ARN-LHR OneWay with one pax.xml'
@@ -15,6 +12,7 @@ defmodule NDCEx do
   end
 
   def parse_xml({xml, _}) do
-    NDCEx.Messages.AirShoppingRQ.yield_core_query(xml)
+    data = NDCEx.Messages.AirShoppingRQ.yield_core_query(xml)
+    IO.inspect data
   end
 end
