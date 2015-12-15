@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OrderCancelRQ xmlns="http://www.iata.org/IATA/EDIST" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.iata.org/IATA/EDIST OrderCancelRQ.xsd" Version="1.1.5">
+  <PointOfSale>
+    <Location>
+      <CountryCode>IN</CountryCode>
+      <CityCode>BOM</CityCode>
+    </Location>
+    <RequestTime Zone="EST">2015-08-15T07:45:00+07:45</RequestTime>
+    <TouchPoint>
+      <Device>
+        <Code>2</Code>
+        <Definition>Web Browser</Definition>
+        <Position>
+          <Latitude>19.16293</Latitude>
+          <Longitude>72.83924</Longitude>
+          <NAC>183421</NAC>
+        </Position>
+      </Device>
+      <Event>
+        <Code>9</Code>
+        <Definition>Shop</Definition>
+      </Event>
+    </TouchPoint>
+  </PointOfSale>
+  <Document>
+    <Name>NDC GATEWAY</Name>
+    <ReferenceVersion>1.0</ReferenceVersion>
+  </Document>
+  <Party>
+    <Sender>
+      <TravelAgencySender>
+        <Contacts>
+          <Contact>
+            <EmailContact>
+              <Address>ndc@usdtravel.com</Address>
+            </EmailContact>
+          </Contact>
+        </Contacts>
+        <PseudoCity>A4A</PseudoCity>
+        <IATA_Number>98417900</IATA_Number>
+        <AgencyID Owner="C9">9A</AgencyID>
+        <AgentUser>
+          <Name>ksmith</Name>
+          <AgentUserID>ksmith212</AgentUserID>
+          <UserRole>Admin</UserRole>
+        </AgentUser>
+      </TravelAgencySender>
+    </Sender>
+  </Party>
+  <Query>
+    <OrderID Owner="C9">F9A2TI</OrderID>
+  </Query>
+</OrderCancelRQ>

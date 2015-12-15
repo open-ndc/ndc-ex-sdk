@@ -1,0 +1,8 @@
+<OrderCancelRS Version="1.1.5" xmlns="http://www.iata.org/IATA/EDIST" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Document />
+  <Success />
+  <Response>
+    <OrderCancelProcessing />
+    <OrderReference>T9A6E1</OrderReference>
+  </Response>
+</OrderCancelRS>
