@@ -1,4 +1,45 @@
 defmodule NDCEx do
+  @acceptable_ndc_methods [ AirShopping: ['AirShoppingRQ', 'AirShoppingRS'], 
+                            FlightPrice: ['FlightPriceRQ', 'FlightPriceRS'],
+                            SeatAvailability: ['SeatAvailabilityRQ', 'SeatAvailabilityRS'],
+                            ServiceList: ['ServiceListRQ', 'ServiceListRS'],
+                            ServicePrice: ['ServicePriceRQ', 'ServicePriceRS'],
+
+                            OrderCreate: ['OrderCreateRQ', 'OrderViewRS'],
+                            OrderList: ['OrderListRQ', 'OrderListRS'],
+                            OrderRetrieve: ['OrderRetrieveRQ', 'OrderViewRS'],
+                            OrderCancel: ['OrderCancelRQ', 'OrderCancelRS']
+                          ]
+  @query_params [ 
+                  CoreQuery: [
+                    OriginDestinations: [
+                      OriginDestination: [
+                        Departure: [
+                          AirportCode: 'MUC',
+                          Date: '2016-04-01'
+                        ],
+                        Arrival: [
+                          AirportCode: 'LHR'
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+
+  def request(method, params) when is_atom(method) do
+    #for testing purposes params are taken from module attribute defuned abowe
+    params = @query_params
+
+    ndc_config = get_mix_config
+    [request_name, response_name] = @acceptable_ndc_methods[method]
+    apply(NDCEx.Messages.request_name, yield, params)
+
+    IO.inspect ndc_config
+  end
+
+  def get_mix_config do
+    Application.get_env(:ndc_ex_sdk, :rest)
+  end
 
   def parse do
     file_name = 'requests/Athena/OneWay/AirShoppingRQ - ARN-LHR OneWay with one pax.xml'
@@ -12,9 +53,8 @@ defmodule NDCEx do
   end
 
   def parse_xml({xml, _}) do
-    data = xml
+    xml
     |> NDCEx.Messages.AirShoppingRQ.yield_core_query
-    |> XmlBuilder.generate
-    IO.inspect data
+    |> IO.inspect
   end
 end
