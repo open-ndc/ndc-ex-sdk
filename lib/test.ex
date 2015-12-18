@@ -1,13 +1,15 @@
 defmodule Test do
+  import XmlBuilder
 
   def run do
-    request_name = 'AirShoppingRQ'
-    params = "qwe"
+    [person("Steve", "Jobs"), person("Steve", "Wozniak")] |> generate
+  end
 
-		differ = quote do
-			apply( unquote('NDCEx.Message.#{request_name}'), :yield, unquote(params) )
-		end
-    Code.eval_quoted(differ)
+  def person(first, last) do
+    element(:person, [
+      element(:first, first),
+      element(:last, last)
+    ])
   end
 
 end

@@ -31,9 +31,8 @@ defmodule NDCEx do
     params = @query_params
 
     ndc_config = get_mix_config(:ndc)
-    IO.inspect ndc_config
     [request_name, response_name] = @acceptable_ndc_methods[method]
-    apply(Module.concat([NDCEx.Message, request_name]), :yield, [params, ndc_config] )
+    apply(Module.concat([NDCEx.Message, request_name]), :yield, ndc_config )
   end
 
   def get_mix_config(key) when is_atom(key) do

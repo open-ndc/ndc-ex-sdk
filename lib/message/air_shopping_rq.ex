@@ -3,11 +3,11 @@ defmodule NDCEx.Message.AirShoppingRQ do
   #import SweetXml
 	import XmlBuilder
 
-  def yield([params, config]) do
-		build_document(params, config)
+  def yield(config) do
+		build_document(config) |> generate
   end
 	
-	def build_document(params, config) do
+	def build_document(config) do
 		element(:AirShoppingRQ, [
 			element(:Document, [
         element(:Name, config[:document][:name]),
@@ -28,14 +28,13 @@ defmodule NDCEx.Message.AirShoppingRQ do
             element(:AgencyID, %{Owner: "9A"}, "9A"),
             element(:AgentUser, [ 
               element(:Name, config[:party][:sender][:oraSender][:agentUser][:name]),
-              element(:Name, config[:party][:sender][:oraSender][:agentUser][:agentUserID]),
-              element(:Name, "Admin")
-            ]),
+              element(:AgentUserID, config[:party][:sender][:oraSender][:agentUser][:agentUserID]),
+              element(:UserRole, "Admin")
+            ])
           ])
-        ]),
-        element(:ReferenceVersion, config[:document][:referenceVersion]),
+        ])
       ])
-		]) |> generate
+		])
 	end
 
 end
