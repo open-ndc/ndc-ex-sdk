@@ -1,5 +1,5 @@
 defmodule NDCEx do
-  @acceptable_ndc_methods [ AirShopping: ['AirShoppingRQ', 'AirShoppingRS'], 
+  @acceptable_ndc_methods [ AirShopping: ["AirShoppingRQ", 'AirShoppingRS'], 
                             FlightPrice: ['FlightPriceRQ', 'FlightPriceRS'],
                             SeatAvailability: ['SeatAvailabilityRQ', 'SeatAvailabilityRS'],
                             ServiceList: ['ServiceListRQ', 'ServiceListRS'],
@@ -30,15 +30,14 @@ defmodule NDCEx do
     #for testing purposes params are taken from module attribute defuned abowe
     params = @query_params
 
-    ndc_config = get_mix_config
+    ndc_config = get_mix_config(:ndc)
+		IO.inspect ndc_config
     [request_name, response_name] = @acceptable_ndc_methods[method]
-    apply(NDCEx.Messages.request_name, yield, params)
-
-    IO.inspect ndc_config
+		apply(Module.concat([NDCEx.Message, request_name]), :yield, params )
   end
 
-  def get_mix_config do
-    Application.get_env(:ndc_ex_sdk, :rest)
+  def get_mix_config(key) when is_atom(key) do
+    Application.get_env(:ndc_ex_sdk, key)
   end
 
   def parse do
