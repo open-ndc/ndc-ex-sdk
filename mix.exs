@@ -4,7 +4,7 @@ defmodule NDCExSdk.Mixfile do
   def project do
     [app: :ndc_ex_sdk,
      version: "0.0.1",
-     elixir: "~> 1.1",
+     elixir: "~> 1.1.1",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
@@ -14,7 +14,7 @@ defmodule NDCExSdk.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :yaml_elixir]]
+    [applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
@@ -28,10 +28,7 @@ defmodule NDCExSdk.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:xml_builder, "~> 0.0.6"},
-      {:sweet_xml, "~> 0.5.0"},
-      {:yaml_elixir, "~> 1.0"},
-      { :yamerl, github: "yakaz/yamerl" },
+      {:xml_builder, "0.0.8"},
       {:pipe, "~> 0.0.2"}]
   end
 end
