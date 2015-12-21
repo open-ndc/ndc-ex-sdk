@@ -1,40 +1,30 @@
 defmodule NDCEx.Message.AirShoppingRQ do
-  #alias NDCEx.Base
-  #import SweetXml
-	import XmlBuilder
+  import XmlBuilder
 
-  def yield(config) do
-		build_document(config) |> generate
+  def yield(params) do
+		yield_core_query(params)
   end
-	
-	def build_document(config) do
-		element(:AirShoppingRQ, [
-			element(:Document, [
-        element(:Name, config[:document][:name]),
-        element(:ReferenceVersion, config[:document][:referenceVersion]),
-      ]),
-			element(:Party, [
-        element(:Sender, [ 
-          element(:TravelAgencySender, [ 
-            element(:Contacts, [ 
-              element(:Contact, [ 
-                element(:EmailContact, [ 
-                  element(:Address, 'ndc@usdtravel.com'),
-                ])
-              ])
-            ]),
-            element(:PseudoCity, config[:party][:sender][:oraSender][:agentUser][:pseudoCity]),
-            element(:IATA_Number, config[:party][:sender][:oraSender][:agentUser][:iata_Number]),
-            element(:AgencyID, %{Owner: "9A"}, "9A"),
-            element(:AgentUser, [ 
-              element(:Name, config[:party][:sender][:oraSender][:agentUser][:name]),
-              element(:AgentUserID, config[:party][:sender][:oraSender][:agentUser][:agentUserID]),
-              element(:UserRole, "Admin")
-            ])
+
+  def yield_core_query(params) do
+		element(:CoreQuery, [
+			element(:OriginDestinations, [
+				element(:OriginDestination, [
+					element(:Departure, [
+            element(:AirportCode, params[:CoreQuery][:OriginDestinations][:OriginDestination][:Departure][:AirportCode]),
+            element(:Date, params[:CoreQuery][:OriginDestinations][:OriginDestination][:Departure][:Date])
+						#AirportCode: params[:CoreQuery][:OriginDestinations][:OriginDestination][:Departure][:AirportCode],
+						#Date: params[:CoreQuery][:OriginDestinations][:OriginDestination][:Departure][:Date]
+          ]),
+					element(:Arrival, [
+						element(:AirportCode, params[:CoreQuery][:OriginDestinations][:OriginDestination][:Departure][:AirportCode])
+          ]),
+					element(:MarketingCarrierAirline, [
+						element(:AirlineID, "9A"),
+						element(:Name, "Athena Air")
           ])
-        ])
-      ])
+				])
+			])
 		])
-	end
+  end
 
 end

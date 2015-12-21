@@ -1,6 +1,2 @@
-%{"exml": {:hex, :exml, "0.1.0"},
-  "pipe": {:hex, :pipe, "0.0.2"},
-  "sweet_xml": {:hex, :sweet_xml, "0.5.0"},
-  "xml_builder": {:hex, :xml_builder, "0.0.7"},
-  "yamerl": {:git, "https://github.com/yakaz/yamerl.git", "ae810a808817d9482b4628ae3e20d746e3729fe0", []},
-  "yaml_elixir": {:hex, :yaml_elixir, "1.0.0"}}
+%{"pipe": {:hex, :pipe, "0.0.2"},
+  "xml_builder": {:hex, :xml_builder, "0.0.8"}}
