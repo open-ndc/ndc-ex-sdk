@@ -2,23 +2,28 @@ defmodule NDCEx.Message.Base do
   import XmlBuilder
 
   def build_document(request_name, params, config) do
-    request_name
+    data = request_name
     |> get_module_name
     |> apply(:yield, [params])
     |> build config 
-    |> generate
+
+		generate(data)
   end
 
   defp build(tag, config) do
 		element(:AirShoppingRQ, [
-      element(:document, [
-       element(:name, config[:document][:name]),
-       element(:referenceVersion, config[:document][:referenceVersion])
-      ]),
+			element(:Document, nil,
+			 Name: config[:Document][:Name],
+			 ReferenceVersion: config[:Document][:ReferenceVersion]
+			),
+      #element(:Document, [
+       #element(:Name, config[:document][:name]),
+       #element(:ReferenceVersion, config[:Document][:referenceVersion])
+      #]),
 			element(:Party, [
 				element(:Sender, [ 
 					element(:TravelAgencySender, [ 
-						element(:Contacts, [ 
+						element(:Contacts, nil, [ 
 							element(:Contact, [ 
 								element(:EmailContact, [ 
 									element(:Address, "ndc@usdtravel.com"),
@@ -36,7 +41,7 @@ defmodule NDCEx.Message.Base do
 					])
 				])
 			]),
-      tag,
+			tag,
       element(:Parameters, [ 
         element(:CurrCodes, [
           element(:CurrCode, "EUR") 
@@ -70,6 +75,6 @@ defmodule NDCEx.Message.Base do
   end
 
   defp get_module_name (request_name) do
-    Module.concat([NDCEx.Message, request_name])
-  end
+		Module.concat([NDCEx.Message, request_name])
+	end
 end

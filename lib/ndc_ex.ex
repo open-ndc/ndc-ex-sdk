@@ -1,5 +1,5 @@
 defmodule NDCEx do
-  @acceptable_ndc_methods [ AirShopping: ["AirShoppingRQ", 'AirShoppingRS'], 
+  @acceptable_ndc_methods [ AirShopping: ["AirShoppingRQ", "AirShoppingRS"], 
                             FlightPrice: ['FlightPriceRQ', 'FlightPriceRS'],
                             SeatAvailability: ['SeatAvailabilityRQ', 'SeatAvailabilityRS'],
                             ServiceList: ['ServiceListRQ', 'ServiceListRS'],
@@ -15,11 +15,11 @@ defmodule NDCEx do
                     OriginDestinations: [
                       OriginDestination: [
                         Departure: [
-                          AirportCode: 'MUC',
-                          Date: '2016-04-01'
+                          AirportCode: "MUC",
+                          Date: "2016-04-01"
                         ],
                         Arrival: [
-                          AirportCode: 'LHR'
+                          AirportCode: "LHR"
                         ]
                       ]
                     ]
@@ -28,8 +28,8 @@ defmodule NDCEx do
 
   def request(method, params) do
     #for testing purposes params are taken from module attribute defined above
-    params = @query_params
-    method = :AirShopping
+    #params = @query_params
+    #method = :AirShopping
 
     ndc_config = get_mix_config(:ndc)
     [request_name, response_name] = @acceptable_ndc_methods[method]
