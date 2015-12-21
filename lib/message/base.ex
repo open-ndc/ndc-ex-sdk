@@ -16,10 +16,6 @@ defmodule NDCEx.Message.Base do
 			 Name: config[:Document][:Name],
 			 ReferenceVersion: config[:Document][:ReferenceVersion]
 			),
-      #element(:Document, [
-       #element(:Name, config[:document][:name]),
-       #element(:ReferenceVersion, config[:Document][:referenceVersion])
-      #]),
 			element(:Party, [
 				element(:Sender, [ 
 					element(:TravelAgencySender, [ 
