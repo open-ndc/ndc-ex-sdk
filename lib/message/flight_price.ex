@@ -1,5 +1,6 @@
 defmodule NDCEx.Message.AirShoppingRQ do
   import XmlBuilder
+  # this is just example of 'params' variable
   @query_params [
         Query: [
           OriginDestination: [
@@ -32,17 +33,15 @@ defmodule NDCEx.Message.AirShoppingRQ do
           ]
         ]
 
-  def yield(params) do
-    yield_query(params)
-  end
+  def yield(params), do: yield_query(params)
 
-  def yield_core_query(params) do
+  defp yield_core_query(params) do
     element(:Query, [
       element(:OriginDestination, get_flights(params[:Query][:OriginDestination]))
     ])
   end
 
-  def get_flights(params) do
+  defp get_flights(params) do
     Enum.each params, fn el ->
       [
         element(:Flight, [
