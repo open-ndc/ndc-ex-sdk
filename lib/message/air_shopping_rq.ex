@@ -1,26 +1,20 @@
 defmodule NDCEx.Message.AirShoppingRQ do
   import XmlBuilder
-  #@query_params [ 
-                  #CoreQuery: [
-                    #OriginDestinations: [
-                      #OriginDestination: [
-                        #Departure: [
-                          #AirportCode: "MUC",
-                          #Date: "2016-04-01"
-                        #],
-                        #Arrival: [
-                          #AirportCode: "LHR"
-                        #]
-                      #]
-                    #]
-                  #]
-                #]
 
-  def yield(params) do
-    yield_core_query(params)
+  @doc """
+  yield is called by apply function on Message.Base module
+  """
+
+
+  def yield(params), do: yield_core_query(params)
+
+  defp yield_core_query(params) do
+    element(:CoreQuery, [
+      element(:OriginDestinations, origin_destinations(params[:CoreQuery][:OriginDestinations]))
+    ])
   end
 
-  def origin_destinations(params) do
+  defp origin_destinations(params) do
     Enum.each params, fn el ->
       [
         element(:OriginDestination, [
@@ -39,11 +33,4 @@ defmodule NDCEx.Message.AirShoppingRQ do
       ]
     end
   end
-
-  def yield_core_query(params) do
-    element(:CoreQuery, [
-      element(:OriginDestinations, origin_destinations(params[:CoreQuery][:OriginDestinations]))
-    ])
-  end
-
 end
