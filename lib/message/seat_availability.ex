@@ -1,10 +1,11 @@
-defmodule NDCEx.Message.FlightPriceRQ do
+defmodule NDCEx.Message.SeatAvailabilityRQ do
   import XmlBuilder
+
   # this is just example of 'params' variable. defined for testing purpose
   @query_params [
-        Query: [
-          OriginDestination: [
-            Flight: [
+        DataList: [
+          FlightSegmentList: [
+            FlightSegment: [
               Departure: [
                 AirportCode: "ARN",
                 Date: "2015-12-25",
@@ -28,7 +29,32 @@ defmodule NDCEx.Message.FlightPriceRQ do
               Equipment: [
                 AircraftCode: "E95",
                 Name: "E95 - EMBRAER 195 JET"
+              ],
+              ClassOfService: [
+                Code: "M"
+              ],
+              FlightDetail: [
+                FlightDuration: [
+                  Value: "PT2H10M"
+                ]
               ]
+            ]
+          ],
+          FlightList: [
+            Flight: [
+              FlightKey: "FL1",
+              Journey: [
+                Time: "PT3H15M"
+              ]
+            ],
+            SegmentReferences: "SEG1 SEG2"
+          ],
+          OriginDestinationList: [
+            OriginDestination: [
+              OriginDestinationKey: "OD1"
+              DepartureCode: "ARN",
+              ArrivalCode: "LHR",
+              FlightReferences: "FL1",
             ]
           ]
         ]
