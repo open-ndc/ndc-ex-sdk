@@ -14,7 +14,7 @@ rest: [
 
 ndc: [
   document: [
-    name: "NDC Wrapper,",
+    name: "NDC Wrapper",
     referenceVersion: "1.0"
   ],
   party: [
