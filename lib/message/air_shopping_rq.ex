@@ -10,27 +10,27 @@ defmodule NDCEx.Message.AirShoppingRQ do
 
   defp yield_core_query(params) do
     element(:CoreQuery, [
-      element(:OriginDestinations, origin_destinations(params[:CoreQuery][:OriginDestinations]))
+      element(:OriginDestinations, [ origin_destinations(params[:CoreQuery][:OriginDestinations]) ])
     ])
   end
 
   defp origin_destinations(params) do
-    Enum.each params, fn el ->
-      [
-        element(:OriginDestination, [
-          element(:Departure, [
-            element(:AirportCode, el[:OriginDestination][:Departure][:AirportCode]),
-            element(:Date, el[:OriginDestination][:Departure][:Date])
-          ]),
-          element(:Arrival, [
-            element(:AirportCode, el[:OriginDestination][:Departure][:AirportCode])
-          ]),
-          element(:MarketingCarrierAirline, [
-            element(:AirlineID, "9A"),
-            element(:Name, "Athena Air")
-          ])
+    Enum.map(params, fn el ->
+      #this because el is tuple :( I need List to work with
+      item = elem el, 1
+      element(:OriginDestination, [
+        element(:Departure, [
+          element(:AirportCode, item[:Departure][:AirportCode]),
+          element(:Date, item[:Departure][:Date])
+        ]),
+        element(:Arrival, [
+          element(:AirportCode, item[:Arrival][:AirportCode])
+        ]),
+        element(:MarketingCarrierAirline, [
+          element(:AirlineID, "9A"),
+          element(:Name, "Athena Air")
         ])
-      ]
-    end
+      ])
+    end)
   end
 end

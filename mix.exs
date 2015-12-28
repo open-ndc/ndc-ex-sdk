@@ -27,8 +27,9 @@ defmodule NDCExSdk.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
-      #{:xml_builder, "0.0.8"},
-      #{:pipe, "~> 0.0.2"}]
+    [
+      {:xml_builder, "0.0.8"},
+      {:pipe, "~> 0.0.2"}
+    ]
   end
 end

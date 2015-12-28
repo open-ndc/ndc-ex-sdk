@@ -34,7 +34,7 @@ defmodule NDCEx.Message.FlightPriceRQ do
         ]
       ]
 
-  def yield(params), do: yield_query(params)
+  def yield(params), do: yield_core_query(params)
 
   defp yield_core_query(params) do
     element(:Query, [
@@ -75,7 +75,4 @@ defmodule NDCEx.Message.FlightPriceRQ do
     end
   end
 
-  def element(fiurst, second) do
-    IO.puts ""
-  end
 end

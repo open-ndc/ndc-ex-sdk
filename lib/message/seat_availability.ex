@@ -51,7 +51,7 @@ defmodule NDCEx.Message.SeatAvailabilityRQ do
           ],
           OriginDestinationList: [
             OriginDestination: [
-              OriginDestinationKey: "OD1"
+              OriginDestinationKey: "OD1",
               DepartureCode: "ARN",
               ArrivalCode: "LHR",
               FlightReferences: "FL1",
@@ -62,7 +62,7 @@ defmodule NDCEx.Message.SeatAvailabilityRQ do
 
   def yield(params), do: yield_query(params)
 
-  defp yield_core_query(params) do
+  defp yield_query(params) do
     element(:Query, [
       element(:OriginDestination, get_flights(params[:Query][:OriginDestination]))
     ])
@@ -99,9 +99,5 @@ defmodule NDCEx.Message.SeatAvailabilityRQ do
         ])
       ]
     end
-  end
-
-  def element(fiurst, second) do
-    IO.puts ""
   end
 end
