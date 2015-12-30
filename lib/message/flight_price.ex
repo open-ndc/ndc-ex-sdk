@@ -34,44 +34,44 @@ defmodule NDCEx.Message.FlightPriceRQ do
         ]
       ]
 
-  def yield(params), do: yield_core_query(params)
+  def yield(params), do: yield_query(params)
 
-  defp yield_core_query(params) do
+  defp yield_query(params) do
     element(:Query, [
-      element(:OriginDestination, get_flights(params[:Query][:OriginDestination]))
+      element(:OriginDestination, [ get_flights(params[:Query][:OriginDestination]) ])
     ])
   end
 
   defp get_flights(params) do
-    Enum.each params, fn el ->
-      [
-        element(:Flight, [
-          element(:Departure, [
-            element(:AirportCode, el[:Flight][:Departure][:AirportCode]),
-            element(:Date, el[:Flight][:Departure][:Date]),
-            element(:Time, el[:Flight][:Departure][:Time])
-          ]),
-          element(:Arrival, [
-            element(:AirportCode, el[:Flight][:Arrival][:AirportCode]),
-            element(:Date, el[:Flight][:Arrival][:Date]),
-            element(:Time, el[:Flight][:Arrival][:Time])
-          ]),
-          element(:MarketingCarrier, [
-            element(:AirlineID, el[:Flight][:MarketingCarrier][:AirlineID]),
-            element(:Name, el[:Flight][:MarketingCarrier][:Name]),
-            element(:FlightNumber, el[:Flight][:MarketingCarrier][:FlightNumber])
-          ]),
-          element(:OperatingCarrier, [
-            element(:AirlineID, el[:Flight][:OperatingCarrier][:AirlineID]),
-            element(:Name, el[:Flight][:OperatingCarrier][:Name]),
-            element(:FlightNumber, el[:Flight][:OperatingCarrier][:FlightNumber])
-          ]),
-          element(:Equipment, [
-            element(:AircraftCode, el[:Flight][:Equipment][:AircraftCode]),
-            element(:Name, el[:Flight][:Equipment][:Name])
-          ])
+    Enum.map params, fn item ->
+      #this because el is tuple :( I need List to work with
+      el = elem item, 1
+      element(:Flight, [
+        element(:Departure, [
+          element(:AirportCode, el[:Departure][:AirportCode]),
+          element(:Date, el[:Departure][:Date]),
+          element(:Time, el[:Departure][:Time])
+        ]),
+        element(:Arrival, [
+          element(:AirportCode, el[:Arrival][:AirportCode]),
+          element(:Date, el[:Arrival][:Date]),
+          element(:Time, el[:Arrival][:Time])
+        ]),
+        element(:MarketingCarrier, [
+          element(:AirlineID, el[:MarketingCarrier][:AirlineID]),
+          element(:Name, el[:MarketingCarrier][:Name]),
+          element(:FlightNumber, el[:MarketingCarrier][:FlightNumber])
+        ]),
+        element(:OperatingCarrier, [
+          element(:AirlineID, el[:OperatingCarrier][:AirlineID]),
+          element(:Name, [:OperatingCarrier][:Name]),
+          element(:FlightNumber, el[:OperatingCarrier][:FlightNumber])
+        ]),
+        element(:Equipment, [
+          element(:AircraftCode, el[:Equipment][:AircraftCode]),
+          element(:Name, el[:Equipment][:Name])
         ])
-      ]
+      ])
     end
   end
 

@@ -70,6 +70,32 @@ defmodule NDCEx.Message.Base do
     ])
   end
 
+  defp get_preferences(params) do
+    Enum.map(params, fn el ->
+      #this because el is tuple :( I need List to work with
+      item = elem el, 1
+      element(:Preference, [
+        element(:AirlinePreferences, [
+          element(:Airline, [
+            element(:AirlineID, params[:Preference][:AirlineID])
+          ])
+        ])
+      ])
+    end)
+  end
+
+  defp get_travalers(params) do
+    Enum.map(params, fn el ->
+      #this because el is tuple :( I need List to work with
+      item = elem el, 1
+      element(:Traveler, [
+        element(:AnonymousTraveler, [
+          element(:PTC, %{Quantity: params[:Traveler][:Quantity]}, params[:Traveler][:PTC])
+        ])
+      ])
+    end)
+  end
+
   defp get_module_name (request_name) do
     Module.concat([NDCEx.Message, request_name])
   end
