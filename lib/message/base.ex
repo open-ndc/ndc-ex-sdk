@@ -5,13 +5,13 @@ defmodule NDCEx.Message.Base do
     data = request_name
     |> get_module_name
     |> apply(:yield, [params])
-    |> build config
+    |> build(request_name, config)
 
     generate(data)
   end
 
-  defp build(tag, config) do
-    element(:AirShoppingRQ, [
+  defp build(tag, request_name, config) do
+    element(String.to_atom(request_name), [
       element(:Document, nil,
        Name: config[:Document][:Name],
        ReferenceVersion: config[:Document][:ReferenceVersion]
@@ -68,6 +68,32 @@ defmodule NDCEx.Message.Base do
         ])
       ])
     ])
+  end
+
+  defp get_preferences(params) do
+    Enum.map(params, fn el ->
+      #this because el is tuple :( I need List to work with
+      item = elem el, 1
+      element(:Preference, [
+        element(:AirlinePreferences, [
+          element(:Airline, [
+            element(:AirlineID, params[:Preference][:AirlineID])
+          ])
+        ])
+      ])
+    end)
+  end
+
+  defp get_travalers(params) do
+    Enum.map(params, fn el ->
+      #this because el is tuple :( I need List to work with
+      item = elem el, 1
+      element(:Traveler, [
+        element(:AnonymousTraveler, [
+          element(:PTC, %{Quantity: params[:Traveler][:Quantity]}, params[:Traveler][:PTC])
+        ])
+      ])
+    end)
   end
 
   defp get_module_name (request_name) do

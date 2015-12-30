@@ -1,16 +1,16 @@
 defmodule NDCEx do
-  @acceptable_ndc_methods [ AirShopping: ["AirShoppingRQ", "AirShoppingRS"], 
-                            FlightPrice: ['FlightPriceRQ', 'FlightPriceRS'],
-                            SeatAvailability: ['SeatAvailabilityRQ', 'SeatAvailabilityRS'],
-                            ServiceList: ['ServiceListRQ', 'ServiceListRS'],
-                            ServicePrice: ['ServicePriceRQ', 'ServicePriceRS'],
+  @acceptable_ndc_methods [ AirShopping: ["AirShoppingRQ", "AirShoppingRS"],
+                            FlightPrice: ["FlightPriceRQ", "FlightPriceRS"],
+                            SeatAvailability: ["SeatAvailabilityRQ", "SeatAvailabilityRS"],
+                            ServiceList: ["ServiceListRQ", "ServiceListRS"],
+                            ServicePrice: ["ServicePriceRQ", "ServicePriceRS"],
 
-                            OrderCreate: ['OrderCreateRQ', 'OrderViewRS'],
-                            OrderList: ['OrderListRQ', 'OrderListRS'],
-                            OrderRetrieve: ['OrderRetrieveRQ', 'OrderViewRS'],
-                            OrderCancel: ['OrderCancelRQ', 'OrderCancelRS']
+                            OrderCreate: ["OrderCreateRQ", "OrderViewRS"],
+                            OrderList: ["OrderListRQ", "OrderListRS"],
+                            OrderRetrieve: ["OrderRetrieveRQ", "OrderViewRS"],
+                            OrderCancel: ["OrderCancelRQ", "OrderCancelRS"]
                           ]
-  @query_params [ 
+  @query_params [
                   CoreQuery: [
                     OriginDestinations: [
                       OriginDestination: [
@@ -37,8 +37,8 @@ defmodule NDCEx do
 
   def request(method, params) do
     #for testing purposes params are taken from module attribute defined above
-		params = @query_params
-		method = :AirShopping
+		#params = @query_params
+		#method = :AirShopping
 
     ndc_config = get_mix_config(:ndc)
     [request_name, response_name] = @acceptable_ndc_methods[method]
