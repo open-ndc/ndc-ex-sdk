@@ -1,7 +1,7 @@
 defmodule Test do
   #import XmlBuilder
 
-  @query_params [ 
+  @query_params [
                   CoreQuery: [
                     OriginDestinations: [
                       OriginDestination: [
@@ -17,7 +17,7 @@ defmodule Test do
                   ]
                 ]
   def run do
-		#{:person, %{id: 12345}, "Josh"} |> XmlBuilder.generate
+    #{:person, %{id: 12345}, "Josh"} |> XmlBuilder.generate
     #person(123, "Steve", "Jobs") |> generate
     {:person, %{id: 12345}, "Josh"} |> XmlBuilder.generate
   end
