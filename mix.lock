@@ -1,2 +1,4 @@
-%{"pipe": {:hex, :pipe, "0.0.2"},
+%{"bunt": {:hex, :bunt, "0.1.4"},
+  "credo": {:hex, :credo, "0.2.5"},
+  "pipe": {:hex, :pipe, "0.0.2"},
   "xml_builder": {:hex, :xml_builder, "0.0.8"}}

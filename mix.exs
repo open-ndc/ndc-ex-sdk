@@ -29,7 +29,8 @@ defmodule NDCExSdk.Mixfile do
   defp deps do
     [
       {:xml_builder, "0.0.8"},
-      {:pipe, "~> 0.0.2"}
+      {:pipe, "~> 0.0.2"},
+      {:credo, "~> 0.2", only: [:dev, :test]}
     ]
   end
 end
