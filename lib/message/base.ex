@@ -5,13 +5,13 @@ defmodule NDCEx.Message.Base do
     data = request_name
     |> get_module_name
     |> apply(:yield, [params])
-    |> build config
+    |> build(request_name, config)
 
     generate(data)
   end
 
-  defp build(tag, config) do
-    element(:AirShoppingRQ, [
+  defp build(tag, request_name, config) do
+    element(String.to_atom(request_name), [
       element(:Document, nil,
        Name: config[:Document][:Name],
        ReferenceVersion: config[:Document][:ReferenceVersion]
