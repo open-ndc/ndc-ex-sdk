@@ -37,8 +37,8 @@ defmodule NDCEx do
 
   def request(method, params) do
     #for testing purposes params are taken from module attribute defined above
-		#params = @query_params
-		#method = :AirShopping
+    #params = @query_params
+    #method = :AirShopping
 
     ndc_config = get_mix_config(:ndc)
     [request_name, response_name] = @acceptable_ndc_methods[method]
