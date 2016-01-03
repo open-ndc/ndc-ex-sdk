@@ -14,7 +14,7 @@ defmodule NDCExSdk.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :httpotion]]
   end
 
   # Dependencies can be Hex packages:
@@ -30,6 +30,8 @@ defmodule NDCExSdk.Mixfile do
     [
       {:xml_builder, "0.0.8"},
       {:pipe, "~> 0.0.2"},
+      {:ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.2"},
+      {:httpotion, "~> 2.1.0"},
       {:credo, "~> 0.2", only: [:dev, :test]}
     ]
   end
