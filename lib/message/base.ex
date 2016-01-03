@@ -1,20 +1,28 @@
 defmodule NDCEx.Message.Base do
   import XmlBuilder
 
-  def build_document(request_name, params, config) do
-    data = request_name
+  def build_document(config, request_name, params) do
+    request_name
     |> get_module_name
     |> apply(:yield, [params])
     |> build(request_name, config)
+    |> doc
+  end
 
-    generate(data)
+  defp document_attributes do
+    %{ 
+      "xmlns" => "http://www.iata.org/IATA/EDIST", 
+      "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", 
+      "xsi:schemaLocation" => "http://www.iata.org/IATA/EDIST ../AirShoppingRQ.xsd",
+      "Version" => "1.1.3"
+    }
   end
 
   defp build(tag, request_name, config) do
-    element(String.to_atom(request_name), [
+    element(String.to_atom(request_name), document_attributes , [
       element(:Document, nil,
-       Name: config[:Document][:Name],
-       ReferenceVersion: config[:Document][:ReferenceVersion]
+       Name: config[:document][:name],
+       ReferenceVersion: config[:document][:referenceVersion]
       ),
       element(:Party, [
         element(:Sender, [
@@ -37,7 +45,6 @@ defmodule NDCEx.Message.Base do
           ])
         ])
       ]),
-      tag,
       element(:Parameters, [
         element(:CurrCodes, [
           element(:CurrCode, "EUR")
@@ -50,6 +57,7 @@ defmodule NDCEx.Message.Base do
           ])
         ])
       ]),
+      tag,
       element(:Preferences, [
         element(:Preference, [
           element(:AirlinePreferences, [
