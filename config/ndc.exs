@@ -4,11 +4,11 @@ config :ndc_ex_sdk,
 
 label: "KRO",
 rest: [
-    url: "http://iata.api.mashery.com/kronos/api",
+    url: "http://kronos.jrtechnologies.com/dondc",
     headers: [
-      accept: "application/xml",
-      contentType: "application/xml",
-      authorizationKey: "xxxxxxxx"
+      "Accept": "application/xml",
+      "Content-Type": "application/xml",
+      "AuthorizationKey": "5uctrqudxcda8zb28f86m88j"
     ]
   ],
 
