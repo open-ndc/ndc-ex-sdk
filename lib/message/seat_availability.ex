@@ -1,103 +1,149 @@
 defmodule NDCEx.Message.SeatAvailabilityRQ do
   import XmlBuilder
+  require Logger
 
-  # this is just example of 'params' variable. defined for testing purpose
+  # this is just example of "params" variable. defined for testing purpose
   @query_params [
-        DataList: [
-          FlightSegmentList: [
-            FlightSegment: [
-              Departure: [
-                AirportCode: "ARN",
-                Date: "2015-12-25",
-                Time: "13:20"
-              ],
-              Arrival: [
-                AirportCode: "FRA",
-                Date: "2015-12-25",
-                Time: "15:30"
-              ],
-              MarketingCarrier: [
-                AirlineID: "9A",
-                Name: "Athena Air",
-                FlightNumber: "3803"
-              ],
-              OperatingCarrier: [
-                AirlineID: "9A",
-                Name: "Athena Air",
-                FlightNumber: "3803"
-              ],
-              Equipment: [
-                AircraftCode: "E95",
-                Name: "E95 - EMBRAER 195 JET"
-              ],
-              ClassOfService: [
-                Code: "M"
-              ],
-              FlightDetail: [
-                FlightDuration: [
-                  Value: "PT2H10M"
-                ]
-              ]
+      Query: [
+        OriginDestination: [
+          OriginDestinationReferences: "OD1"
+        ]
+      ],
+      DataList: [
+        OriginDestinationList: [
+          OriginDestination: [
+            _OriginDestinationKey: "OD1",
+            DepartureCode: "ARN",
+            ArrivalCode: "RIX"
+          ]
+        ],
+        FlightList: [
+          Flight: [
+            _FlightKey: "FL1",
+            Journey: [
+              Time: "PT6H55M"
             ]
-          ],
-          FlightList: [
-            Flight: [
-              FlightKey: "FL1",
-              Journey: [
-                Time: "PT3H15M"
+          ]
+        ],
+        FlightSegmentList: [
+          FlightSegment: [
+            _SegmentKey: "SEG1",
+            Departure: [
+              AirportCode: "ARN",
+              Date: "2016-05-05",
+              Time: "06:00"
+            ],
+            Arrival: [
+              AirportCode: "FRA",
+              Date: "2016-05-05",
+              Time: "08:10",
+              AirportName: "Frankfurt International"
+            ],
+            MarketingCarrier: [
+              AirlineID: "C9",
+              Name: "Kronos Air",
+              FlightNumber: "809"
+            ],
+            OperatingCarrier: [
+              AirlineID: "C9",
+              Name: "Kronos Air",
+              FlightNumber: "809"
+            ],
+            Equipment: [
+              AircraftCode: "32A",
+              Name: ""
+            ],
+            ClassOfService: [
+              Code: "M"
+            ],
+            FlightDetail: [
+              FlightDuration: [
+                Value: "PT2H10M"
               ]
             ],
-            SegmentReferences: "SEG1 SEG2"
           ],
-          OriginDestinationList: [
-            OriginDestination: [
-              OriginDestinationKey: "OD1",
-              DepartureCode: "ARN",
-              ArrivalCode: "LHR",
-              FlightReferences: "FL1",
+          FlightSegment: [
+            _SegmentKey: "SEG2",
+            Departure: [
+              AirportCode: "FRA",
+              Date: "2016-05-05",
+              Time: "09:50",
+              AirportName: "Frankfurt International"
+            ],
+            Arrival: [
+              AirportCode: "RIX",
+              Date: "2016-05-05",
+              Time: "12:55",
+              AirportName: "Riga International"
+            ],
+            MarketingCarrier: [
+              AirlineID: "C9",
+              Name: "Kronos Air",
+              FlightNumber: "890"
+            ],
+            OperatingCarrier: [
+              AirlineID: "C9",
+              Name: "Kronos Air",
+              FlightNumber: "890"
+            ],
+            Equipment: [
+              AircraftCode: "321",
+              Name: "321 - AIRBUS INDUSTRIE A321 JET"
+            ],
+            ClassOfService: [
+              Code: "M"
+            ],
+            FlightDetail: [
+              FlightDuration: [
+                Value: "PT3H5M"
+              ]
             ]
           ]
         ]
       ]
+    ]
 
-  def yield(params), do: yield_query(params)
+  def yield(params), do: build(params)
 
-  defp yield_query(params) do
-    element(:Query, [
-      element(:OriginDestination, get_flights(params[:Query][:OriginDestination]))
+  defp build(params) do
+    [
+      element(:Query, params[:Query]),
+      element(:DataList, [
+        element(:OriginDestinationList, [
+          origin_destination_list(params[:DataList][:OriginDestinationList]),
+        ]),
+        element(:FlightList, [
+          flight_list(params[:DataList][:FlightList]),
+        ]),
+        element(:FlightSegmentList, [
+          flight_segment(params[:DataList][:FlightSegmentList])
+        ])
+      ])
+    ]
+  end
+
+  defp query(params) do
+    element(:OriginDestination, params[:OriginDestination])
+  end
+
+  defp origin_destination_list(params) do
+    element(:OriginDestination, %{OriginDestinationKey: params[:OriginDestination][:_OriginDestinationKey]}, [
+      element(:DepartureCode, params[:OriginDestination][:DepartureCode]),
+      element(:ArrivalCode, params[:OriginDestination][:ArrivalCode])
     ])
   end
 
-  defp get_flights(params) do
-    Enum.each params, fn el ->
-      [
-        element(:Flight, [
-          element(:Departure, [
-            element(:AirportCode, el[:Flight][:Departure][:AirportCode]),
-            element(:Date, el[:Flight][:Departure][:Date]),
-            element(:Time, el[:Flight][:Departure][:Time])
-          ]),
-          element(:Arrival, [
-            element(:AirportCode, el[:Flight][:Arrival][:AirportCode]),
-            element(:Date, el[:Flight][:Arrival][:Date]),
-            element(:Time, el[:Flight][:Arrival][:Time])
-          ]),
-          element(:MarketingCarrier, [
-            element(:AirlineID, el[:Flight][:MarketingCarrier][:AirlineID]),
-            element(:Name, el[:Flight][:MarketingCarrier][:Name]),
-            element(:FlightNumber, el[:Flight][:MarketingCarrier][:FlightNumber])
-          ]),
-          element(:OperatingCarrier, [
-            element(:AirlineID, el[:Flight][:OperatingCarrier][:AirlineID]),
-            element(:Name, el[:Flight][:OperatingCarrier][:Name]),
-            element(:FlightNumber, el[:Flight][:OperatingCarrier][:FlightNumber])
-          ]),
-          element(:Equipment, [
-            element(:AircraftCode, el[:Flight][:Equipment][:AircraftCode]),
-            element(:Name, el[:Flight][:Equipment][:Name])
-          ])
-        ])
-      ]
-    end
+  defp flight_list(params) do
+    Enum.map(params, fn item ->
+      el = elem item, 1
+      element(:Flight, %{FlightKey: el[:_FlightKey]}, el)
+    end)
+  end
+
+  defp flight_segment(params) do
+    Enum.map(params, fn item ->
+      el = elem item, 1
+      element(:FlightSegment, %{SegmentKey: el[:_SegmentKey]}, el)
+    end)
   end
 end
