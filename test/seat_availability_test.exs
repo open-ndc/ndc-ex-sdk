@@ -1,9 +1,10 @@
-defmodule NDCEx.Message.SeatAvailabilityRQ do
-  import XmlBuilder
+defmodule SeatAvailabilityTest do
   require Logger
+  use ExUnit.Case
+  require HTTPotion
+  doctest NDCEx
 
-  # this is just example of "params" variable. defined for testing purpose
-  @query_params [
+	@seat_params  [
       Query: [
         OriginDestination: [
           OriginDestinationReferences: "OD1"
@@ -22,6 +23,12 @@ defmodule NDCEx.Message.SeatAvailabilityRQ do
             _FlightKey: "FL1",
             Journey: [
               Time: "PT6H55M"
+            ]
+          ],
+          Flight: [
+            _FlightKey: "FL2",
+            Journey: [
+              Time: "BLAH"
             ]
           ]
         ],
@@ -60,7 +67,7 @@ defmodule NDCEx.Message.SeatAvailabilityRQ do
               FlightDuration: [
                 Value: "PT2H10M"
               ]
-            ],
+            ]
           ],
           FlightSegment: [
             _SegmentKey: "SEG2",
@@ -103,47 +110,9 @@ defmodule NDCEx.Message.SeatAvailabilityRQ do
       ]
     ]
 
-  def yield(params), do: build(params)
-
-  defp build(params) do
-    [
-      element(:Query, params[:Query]),
-      element(:DataList, [
-        element(:OriginDestinationList, [
-          origin_destination_list(params[:DataList][:OriginDestinationList]),
-        ]),
-        element(:FlightList, [
-          flight_list(params[:DataList][:FlightList]),
-        ]),
-        element(:FlightSegmentList, [
-          flight_segment(params[:DataList][:FlightSegmentList])
-        ])
-      ])
-    ]
-  end
-
-  defp query(params) do
-    element(:OriginDestination, params[:OriginDestination])
-  end
-
-  defp origin_destination_list(params) do
-    element(:OriginDestination, %{OriginDestinationKey: params[:OriginDestination][:_OriginDestinationKey]}, [
-      element(:DepartureCode, params[:OriginDestination][:DepartureCode]),
-      element(:ArrivalCode, params[:OriginDestination][:ArrivalCode])
-    ])
-  end
-
-  defp flight_list(params) do
-    Enum.map(params, fn item ->
-      el = elem item, 1
-      element(:Flight, %{FlightKey: el[:_FlightKey]}, el)
-    end)
-  end
-
-  defp flight_segment(params) do
-    Enum.map(params, fn item ->
-      el = elem item, 1
-      element(:FlightSegment, %{SegmentKey: el[:_SegmentKey]}, el)
-    end)
+  test "Call AirShopping request" do
+    data = NDCEx.request(:SeatAvailability, @seat_params)
+		IO.inspect data
+    assert 1+1 == 2
   end
 end
