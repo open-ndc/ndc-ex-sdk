@@ -27,7 +27,7 @@ defmodule NDCEx.Message.Base do
       element(:Party, [
         element(:Sender, [
           element(:TravelAgencySender, [
-            element(:Contacts, nil, [
+            element(:Contacts, [
               element(:Contact, [
                 element(:EmailContact, [
                   element(:Address, "ndc@usdtravel.com"),
