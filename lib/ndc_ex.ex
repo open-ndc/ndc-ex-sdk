@@ -27,7 +27,6 @@ defmodule NDCEx do
   end
 
   def rest_call_with_message(xml, rest_config) do
-    #qwe = HTTPotion.post rest_config[:url], [body: xml, headers: rest_config[:headers]]
     Logger.debug xml
 
     case HTTPotion.post rest_config[:url], [body: xml, headers: rest_config[:headers]] do
