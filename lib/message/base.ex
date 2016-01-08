@@ -10,9 +10,9 @@ defmodule NDCEx.Message.Base do
   end
 
   defp document_attributes(request_name) do
-    %{ 
-      "xmlns" => "http://www.iata.org/IATA/EDIST", 
-      "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", 
+    %{
+      "xmlns" => "http://www.iata.org/IATA/EDIST",
+      "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance",
       "xsi:schemaLocation" => "http://www.iata.org/IATA/EDIST ../#{request_name}.xsd",
       "Version" => "15.2"
     }
