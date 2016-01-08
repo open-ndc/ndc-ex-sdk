@@ -14,7 +14,7 @@ defmodule NDCEx.Message.Base do
       "xmlns" => "http://www.iata.org/IATA/EDIST", 
       "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", 
       "xsi:schemaLocation" => "http://www.iata.org/IATA/EDIST ../#{request_name}.xsd",
-      "Version" => "1.1.3"
+      "Version" => "15.2"
     }
   end
 
