@@ -6,9 +6,9 @@ defmodule NDCEx.Message.AirShoppingRQ do
   """
 
 
-  def yield(params), do: yield_core_query(params)
+  def yield(params), do: build(params)
 
-  defp yield_core_query(params) do
+  defp build(params) do
     element(:CoreQuery, [
       element(:OriginDestinations, [ origin_destinations(params[:CoreQuery][:OriginDestinations]) ])
     ])
