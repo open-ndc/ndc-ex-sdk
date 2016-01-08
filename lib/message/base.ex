@@ -9,17 +9,18 @@ defmodule NDCEx.Message.Base do
     |> doc
   end
 
-  defp document_attributes do
+  defp document_attributes(request_name) do
     %{ 
       "xmlns" => "http://www.iata.org/IATA/EDIST", 
       "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", 
-      "xsi:schemaLocation" => "http://www.iata.org/IATA/EDIST ../AirShoppingRQ.xsd",
-      "Version" => "1.1.3"
+      "xsi:schemaLocation" => "http://www.iata.org/IATA/EDIST ../#{request_name}.xsd",
+      "Version" => "15.2"
     }
   end
 
   defp build(tag, request_name, config) do
-    element(String.to_atom(request_name), document_attributes , [
+    IO.inspect request_name
+    element(String.to_atom(request_name), document_attributes(request_name) , [
       element(:Document, nil,
        Name: config[:document][:name],
        ReferenceVersion: config[:document][:referenceVersion]
