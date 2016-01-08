@@ -35,6 +35,26 @@ defmodule NDCExTest do
               ]
             ]
           ]
+        ],
+        DataLists: [
+          OriginDestinationList: [
+            OriginDestination: [
+                DepartureCode: "ARN",
+                ArrivalCode: "RIX"
+            ]
+          ]
+        ],
+        Metadata: [
+          Other: [
+            OtherMetadata: [
+              CurrencyMetadatas: [
+                CurrencyMetadata: [
+                  _MetadataKey: "EUR",
+                  Decimals: "2" 
+                ]
+              ]
+            ]
+          ]
         ]
       ]
 
@@ -64,15 +84,15 @@ defmodule NDCExTest do
                 ]
 
   test "Call AirShopping request" do
-    #data = NDCEx.request(:AirShopping, @seat_params)
-		#IO.inspect data
+    #data = NDCEx.request(:AirShopping, @core_query_params)
+    #IO.inspect data
     assert 1+1 == 2
   end
 
 
   test "Call FlightPrice request" do
     #flight_price_resp = NDCEx.request(:FlightPrice, @flight_price_query)
-    #Logger.debug flight_price_resp
+    #IO.inspect flight_price_resp
     assert 1 + 1 == 2
   end
 end
