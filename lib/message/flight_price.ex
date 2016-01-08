@@ -31,18 +31,54 @@ defmodule NDCEx.Message.FlightPriceRQ do
               ]
             ]
           ]
-        ]
+        ],
+				DataLists: [
+					OriginDestinationList: [
+						OriginDestination: [
+								DepartureCode: "ARN",
+								ArrivalCode: "RIX"
+						]
+					]
+				],
+				Metadata: [
+					Other: [
+						OtherMetadata: [
+							CurrencyMetadatas: [
+								CurrencyMetadata: [
+									_MetadataKey: "EUR",
+									Decimals: "2" 
+								]
+							]
+						]
+					]
+				]
       ]
 
-  def yield(params), do: yield_query(params)
+  def yield(params), do: build(params)
 
-  defp yield_query(params) do
-    element(:Query, [
-      element(:OriginDestination, [ get_flights(params[:Query][:OriginDestination]) ])
-    ])
+  defp build(params) do
+		[
+			element(:Query, params[:Query]),
+			element(:DataLists, params[:DataLists]),
+			element(:Metadata, meta_data(params[:Metadata][:Other][:OtherMetadata][:CurrencyMetadatas]))
+		]
   end
 
-  defp get_flights(params) do
+	defp meta_data(params) do
+		[
+			element(:Other, [
+				element(:OtherMetadata, [
+					element(:CurrencyMetadatas, [
+						element(:CurrencyMetadata, %{MetadataKey: params[:CurrencyMetadata][:_MetadataKey]}, [
+							element(:Decimals, params[:CurrencyMetadata][:Decimals])
+						])
+					])
+				])
+			])
+		]
+	end
+
+  defp flights(params) do
     Enum.map params, fn item ->
       #this because el is tuple :( I need List to work with
       el = elem item, 1
