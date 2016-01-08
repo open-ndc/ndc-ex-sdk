@@ -38,7 +38,6 @@ defmodule NDCEx do
         {:error, "Not found :("}
       _ ->
         {:error, "Pattern matching did not worked"}
-        
     end
   end
 end

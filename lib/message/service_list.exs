@@ -5,5 +5,7 @@ defmodule NDCEx.Message.ServiceListRQ do
   yield is called by apply function on Message.Base module
   """
 
-  def yield(params), do: params
+  def yield(params), do
+    params
+  end
 end
