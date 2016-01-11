@@ -11,8 +11,8 @@ defmodule ServiceListTest do
     ]
 
   test "Call ServiceList request" do
-    data = NDCEx.request(:ServiceList, @params)
-    IO.inspect data
+    #data = NDCEx.request(:ServiceList, @params)
+    #IO.inspect data
     assert 1+1 == 2
   end
 end
