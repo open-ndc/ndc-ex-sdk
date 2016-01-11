@@ -4,11 +4,11 @@ config :ndc_ex_sdk,
 
 label: "KRO",
 rest: [
-    url: "http://kronos.jrtechnologies.com/dondc",
+    url: "https://ndc-sandbox.herokuapp.com/api/v0/ndc/",
     headers: [
       "Accept": "application/xml",
       "Content-Type": "application/xml",
-      "AuthorizationKey": "5uctrqudxcda8zb28f86m88j"
+      "Content-Type": "application/xml"
     ]
   ],
 
@@ -20,10 +20,10 @@ ndc: [
   party: [
     sender: [
       oraSender: [
-        airlineID: "C9",
-        name: "Kronos Air",
+        airlineID: "FA",
+        name: "Fake Air",
         agentUser: [
-          name: "Travel Wadus",
+          name: "Travel Fake",
           type: "TravelManagementCompany",
           pseudoCity: "A4A",
           agentUserID: "travelwadus",
@@ -48,7 +48,7 @@ ndc: [
   preference: [
     airlinePreferences: [
       airline: [
-        airlineID: "C9"
+        airlineID: "FA"
       ]
     ],
     farePreferences: [
