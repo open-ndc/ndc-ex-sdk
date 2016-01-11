@@ -6,7 +6,7 @@ defmodule NDCEx.Message.AirShoppingRQ do
   """
 
 
-  def yield(params), do: build(params)
+  def yield(params), do: params
 
   defp build(params) do
     element(:CoreQuery, [
@@ -24,11 +24,12 @@ defmodule NDCEx.Message.AirShoppingRQ do
           element(:Date, item[:Departure][:Date])
         ]),
         element(:Arrival, [
-          element(:AirportCode, item[:Arrival][:AirportCode])
+          element(:AirportCode, item[:Arrival][:AirportCode]),
+          element(:Date, item[:Arrival][:Date])
         ]),
         element(:MarketingCarrierAirline, [
-          element(:AirlineID, "9A"),
-          element(:Name, "Athena Air")
+          element(:AirlineID, item[:MarketingCarrierAirline][:AirlineID]),
+          element(:Name, item[:MarketingCarrierAirline][:Name])
         ])
       ])
     end)

@@ -1,9 +1,8 @@
-defmodule NDCExTest do
+defmodule FlightPriceTest do
   require Logger
   use ExUnit.Case
   require HTTPotion
   doctest NDCEx
-
 
   @flight_price_query [
         Query: [
@@ -58,39 +57,7 @@ defmodule NDCExTest do
         ]
       ]
 
-  @core_query_params [
-                  CoreQuery: [
-                    OriginDestinations: [
-                      OriginDestination: [
-                        Departure: [
-                          AirportCode: "MUC",
-                          Date: "2016-04-01"
-                        ],
-                        Arrival: [
-                          AirportCode: "LHR"
-                        ]
-                      ],
-                      OriginDestination: [
-                        Departure: [
-                          AirportCode: "MUC",
-                          Date: "2016-04-01"
-                        ],
-                        Arrival: [
-                          AirportCode: "LHR"
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-
-  test "Call AirShopping request" do
-    #data = NDCEx.request(:AirShopping, @core_query_params)
-    #IO.inspect data
-    assert 1+1 == 2
-  end
-
-
-  test "Call FlightPrice request" do
+  test "Call FlightPrice Request" do
     #flight_price_resp = NDCEx.request(:FlightPrice, @flight_price_query)
     #IO.inspect flight_price_resp
     assert 1 + 1 == 2
