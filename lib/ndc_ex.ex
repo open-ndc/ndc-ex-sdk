@@ -27,7 +27,7 @@ defmodule NDCEx do
   end
 
   def rest_call_with_message(xml, rest_config) do
-    Logger.debug xml
+    # Logger.debug xml
 
     case HTTPotion.post rest_config[:url], [body: xml, headers: rest_config[:headers]] do
       %HTTPotion.Response{body: body, headers: headers, status_code: 200 } ->
