@@ -19,7 +19,6 @@ defmodule NDCEx.Message.Base do
   end
 
   defp build(tag, request_name, config) do
-    IO.inspect request_name
     element(String.to_atom(request_name), document_attributes(request_name) , [
       element(:Document, nil,
        Name: config[:document][:name],
