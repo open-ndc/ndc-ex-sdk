@@ -35,7 +35,7 @@ defmodule NDCEx do
       %HTTPotion.Response{body: _body, headers: headers, status_code: status_code } ->
         {:error, _body}
       %HTTPotion.Response{status_code: 404} ->
-        {:error, "Not found :("}
+        {:error, "Request does not exist"}
       _ ->
         {:error, "Pattern matching did not worked"}
     end
