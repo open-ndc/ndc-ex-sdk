@@ -32,8 +32,8 @@ defmodule NDCEx do
     case HTTPotion.post rest_config[:url], [body: xml, headers: rest_config[:headers]] do
       %HTTPotion.Response{body: body, headers: headers, status_code: 200 } ->
         {:ok, body}
-      %HTTPotion.Response{body: body, headers: headers, status_code: status_code } ->
-        {:error, body}
+      %HTTPotion.Response{body: _body, headers: headers, status_code: status_code } ->
+        {:error, _body}
       %HTTPotion.Response{status_code: 404} ->
         {:error, "Not found :("}
       _ ->
