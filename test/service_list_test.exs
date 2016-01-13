@@ -3,16 +3,36 @@ defmodule ServiceListTest do
   use ExUnit.Case
   require HTTPotion
   doctest NDCEx
+	import SweetXml
 
-  @params [
-    ShoppingResponseIDs: [
-      ResponseID: "RE6ac7227515a047a581d722971b9fa28f"
-      ]
-    ]
+  @valid_core_query_params [
+                  CoreQuery: [
+                    OriginDestinations: [
+                      OriginDestination: [
+                        Departure: [
+                          AirportCode: "SFX",
+                          Date: "2016-03-01"
+                        ],
+                        Arrival: [
+                          AirportCode: "MAD"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
 
   test "Call ServiceList request" do
-    #data = NDCEx.request(:ServiceList, @params)
-    #IO.inspect data
-    assert 1+1 == 2
+    {_, xml} = NDCEx.request(:AirShopping, @valid_core_query_params)
+		response_id = xml |> xpath(~x"//AirShoppingRQ/ShoppingResponseIDs/ResponseID/text()")
+		params = [
+			ShoppingResponseIDs: [
+					ResponseID: response_id
+				]
+			]
+
+		{status, body} = NDCEx.request(:ServiceList, params)
+    Logger.debug params
+    Logger.debug body
+    assert status == :ok
   end
 end
