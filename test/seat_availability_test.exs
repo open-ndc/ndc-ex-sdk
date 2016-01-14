@@ -111,8 +111,8 @@ defmodule SeatAvailabilityTest do
     ]
 
   test "Call AirShopping request" do
-    #data = NDCEx.request(:SeatAvailability, @seat_params)
-    #IO.inspect data
-    assert 1+1 == 2
+    {status, _body} = NDCEx.request(:SeatAvailability, @seat_params)
+    Logger.debug _body
+    assert status == :ok
   end
 end

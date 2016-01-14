@@ -58,8 +58,8 @@ defmodule FlightPriceTest do
       ]
 
   test "Call FlightPrice Request" do
-    #flight_price_resp = NDCEx.request(:FlightPrice, @flight_price_query)
-    #IO.inspect flight_price_resp
-    assert 1 + 1 == 2
+    {status, _body} = NDCEx.request(:FlightPrice, @flight_price_query)
+    Logger.debug _body
+    assert status == :ok
   end
 end
