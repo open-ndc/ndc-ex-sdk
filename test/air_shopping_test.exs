@@ -37,13 +37,14 @@ defmodule AirShoppingTest do
                 ]
 
   test "Valid AirShopping request returns :ok status" do
-    {status, _} = NDCEx.request(:AirShopping, @valid_core_query_params)
-    assert status = :ok
+    {status, _body} = NDCEx.request(:AirShopping, @valid_core_query_params)
+		Logger.debug _body
+    assert status == :ok
   end
 
   test "Invalid AirShopping request returns not :ok status" do
-    {status, _} = NDCEx.request(:AirShopping, @invalid_core_query_params)
-    assert status = :error
+    {status, _body} = NDCEx.request(:AirShopping, @invalid_core_query_params)
+    assert status == :error
   end
 
 end
