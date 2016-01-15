@@ -27,17 +27,19 @@ defmodule NDCEx do
   end
 
   def rest_call_with_message(xml, rest_config) do
-    # Logger.debug xml
-
-    case HTTPotion.post rest_config[:url], [body: xml, headers: rest_config[:headers]] do
-      %HTTPotion.Response{body: body, headers: headers, status_code: 200 } ->
-        {:ok, body}
-      %HTTPotion.Response{body: _body, headers: headers, status_code: status_code } ->
-        {:error, _body}
-      %HTTPotion.Response{status_code: 404} ->
-        {:error, "Request does not exist"}
-      _ ->
-        {:error, "Unknown error"}
+    try do
+      case HTTPotion.post rest_config[:url], [body: xml, headers: rest_config[:headers]] do
+        %HTTPotion.Response{body: body, headers: headers, status_code: 200 } ->
+          {:ok, body}
+        %HTTPotion.Response{body: _body, headers: headers, status_code: status_code } ->
+          {:error, _body}
+        %HTTPotion.Response{status_code: 404} ->
+          {:error, "Request does not exist"}
+        _ ->
+          {:error, "Unknown error"}
+      end
+    rescue
+      e -> {:error, e.message}
     end
   end
 end
