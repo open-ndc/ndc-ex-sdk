@@ -13,57 +13,44 @@ rest: [
   ],
 
 ndc: [
-  document: [
-    name: "NDC Wrapper",
-    referenceVersion: "1.0"
+  Document: [
+    Name: "NDC Wrapper",
+    ReferenceVersion: "1.0"
   ],
-  party: [
-    sender: [
-      oraSender: [
-        airlineID: "FA",
-        name: "Fake Air",
-        agentUser: [
-          name: "Travel Fake",
-          type: "TravelManagementCompany",
-          pseudoCity: "A4A",
-          agentUserID: "travelwadus",
-          iata_Number: "00000001"
+  Party: [
+    Sender: [
+      ORA_Sender: [
+        AirlineID: "C9",
+        Name: "Kronos Air",
+        AgentUser: [
+          Name: "Travel Wadus",
+          Type: "TravelManagementCompany",
+          PseudoCity: "A4A",
+          AgentUserID: "travelwadus",
+          IATA_Number: "00000001"
         ]
       ]
     ]
   ],
-  participants: [
-    participant: [
-      aggregatorParticipant: [
-        name: "Wadus NDC Gateway",
-        aggregatorID: "WAD-00000",
+  Participants: [
+    Participant: [
+      AggregatorParticipant: [
+        Name: "Wadus NDC Gateway",
+        AggregatorID: "WAD-00000",
       ]
     ]
   ],
-  parameters: [
-    currCodes: [
-      currCode: "EUR"
+  Parameters: [
+    CurrCodes: [
+      CurrCode: "EUR"
     ]
   ],
-  preference: [
-    airlinePreferences: [
-      airline: [
-        airlineID: "FA"
-      ]
-    ],
-    farePreferences: [
-      farePreferences: [
-        types: [
-          type: [
-             code: "759"
-          ]
+  Preference: [
+    Preference: [
+      AirlinePreferences: [
+        Airline: [
+          AirlineID: "FA"
         ]
-      ]
-    ],
-    cabinPreferences: [
-      cabinType: [
-        code: "M",
-        definition: "Economy/coach discounted"
       ]
     ]
   ]
