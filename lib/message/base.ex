@@ -1,5 +1,6 @@
 defmodule NDCEx.Message.Base do
   import XmlBuilder
+  require Logger
 
   def build_document(config, request_name, params) do
     request_name
@@ -19,89 +20,44 @@ defmodule NDCEx.Message.Base do
   end
 
   defp build(tag, request_name, config) do
-    element(String.to_atom(request_name), document_attributes(request_name) , [
-      element(:Document, nil,
-       Name: config[:document][:name],
-       ReferenceVersion: config[:document][:referenceVersion]
-      ),
-      element(:Party, [
-        element(:Sender, [
-          element(:TravelAgencySender, [
-            element(:Contacts, [
-              element(:Contact, [
-                element(:EmailContact, [
-                  element(:Address, "ndc@usdtravel.com"),
-                ])
-              ])
-            ]),
-            element(:PseudoCity, config[:party][:sender][:oraSender][:agentUser][:pseudoCity]),
-            element(:IATA_Number, config[:party][:sender][:oraSender][:agentUser][:iata_Number]),
-            element(:AgencyID, %{Owner: "9A"}, "9A"),
-            element(:AgentUser, [
-              element(:Name, config[:party][:sender][:oraSender][:agentUser][:name]),
-              element(:AgentUserID, config[:party][:sender][:oraSender][:agentUser][:agentUserID]),
-              element(:UserRole, "Admin")
-            ])
-          ])
-        ])
+    element(String.to_atom(request_name), document_attributes(request_name), [
+      element(Document: config[:Document]),
+      element(Party: [
+        element(Sender: party(config[:Party][:Sender]))
       ]),
-      element(:Parameters, [
-        element(:CurrCodes, [
-          element(:CurrCode, "EUR")
-        ])
-      ]),
-      element(:Travelers, [
-        element(:Traveler, [
-          element(:AnonymousTraveler, [
+      element(Parameters: config[:Parameters]),
+      element(Travelers: [
+        element(Traveler: [
+          element(AnonymousTraveler: [
             element(:PTC, %{Quantity: "1"}, "ADT")
           ])
         ])
       ]),
       tag,
-      element(:Preferences, [
-        element(:Preference, [
-          element(:AirlinePreferences, [
-            element(:Airline, [
-              element(:AirlineID, "9A")
-            ])
-          ])
-        ]),
-        element(:Preference, [
-          element(:CabinPreferences, [
-            element(:CabinType, [
-              element(:Code, "M"),
-              element(:Definition, "Economy/coach discounted"),
-            ])
+      element(Preferences: config[:Preference]),
+      element(Metadata: metadata)
+    ])
+  end
+
+  defp party(config) do
+    element(TravelAgencySender: [
+      element(Name: config[:ORA_Sender][:AgentUser][:Name]),
+      element(IATA_Number: config[:ORA_Sender][:AgentUser][:IATA_Number]),
+      element(AgencyID: config[:ORA_Sender][:AgentUser][:AgentUserID]),
+    ])
+  end
+
+  defp metadata do
+    element(Other: [
+      element(OtherMetadata: [
+        element(LanguageMetadatas: [
+          element(:LanguageMetadata, %{MetadataKey: "Display"}, [
+            element(Application: "Display"),
+            element(Code_ISO: "en")
           ])
         ])
       ])
     ])
-  end
-
-  defp get_preferences(params) do
-    Enum.map(params, fn el ->
-      #this because el is tuple :( I need List to work with
-      item = elem el, 1
-      element(:Preference, [
-        element(:AirlinePreferences, [
-          element(:Airline, [
-            element(:AirlineID, params[:Preference][:AirlineID])
-          ])
-        ])
-      ])
-    end)
-  end
-
-  defp get_travalers(params) do
-    Enum.map(params, fn el ->
-      #this because el is tuple :( I need List to work with
-      item = elem el, 1
-      element(:Traveler, [
-        element(:AnonymousTraveler, [
-          element(:PTC, %{Quantity: params[:Traveler][:Quantity]}, params[:Traveler][:PTC])
-        ])
-      ])
-    end)
   end
 
   defp get_module_name (request_name) do
