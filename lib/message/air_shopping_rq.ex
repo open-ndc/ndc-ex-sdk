@@ -12,6 +12,8 @@ defmodule NDCEx.Message.AirShoppingRQ do
     element(:CoreQuery, [
       element(:OriginDestinations, [ origin_destinations(params[:CoreQuery][:OriginDestinations]) ])
     ])
+    element(Preferences: config[:Preference])
+    element(Metadata: metadata)
   end
 
   defp origin_destinations(params) do

@@ -109,14 +109,14 @@ defmodule NDCEx.Message.SeatAvailabilityRQ do
     [
       element(:Query, params[:Query]),
       element(:DataList, [
-        element(:OriginDestinationList, [
-          origin_destination_list(params[:DataList][:OriginDestinationList]),
+        element(:FlightSegmentList, [
+          flight_segment(params[:DataList][:FlightSegmentList])
         ]),
         element(:FlightList, [
           flight_list(params[:DataList][:FlightList]),
         ]),
-        element(:FlightSegmentList, [
-          flight_segment(params[:DataList][:FlightSegmentList])
+        element(:OriginDestinationList, [
+          origin_destination_list(params[:DataList][:OriginDestinationList]),
         ])
       ])
     ]
