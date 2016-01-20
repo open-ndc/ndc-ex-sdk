@@ -33,9 +33,7 @@ defmodule NDCEx.Message.Base do
           ])
         ])
       ]),
-      tag,
-      element(Preferences: config[:Preference]),
-      element(Metadata: metadata)
+      tag
     ])
   end
 
