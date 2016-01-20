@@ -45,7 +45,7 @@ ndc: [
       CurrCode: "EUR"
     ]
   ],
-  Preference: [
+  Preferences: [
     Preference: [
       AirlinePreferences: [
         Airline: [
