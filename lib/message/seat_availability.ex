@@ -38,7 +38,8 @@ defmodule NDCEx.Message.SeatAvailabilityRQ do
       element(:Flight, %{FlightKey: el[:_FlightKey]}, [
         element(Journey: [
           element(Time: el[:Journey][:Time])
-        ])
+        ]),
+        element(SegmentReferences: el[:SegmentReferences])
       ])
     end)
   end
