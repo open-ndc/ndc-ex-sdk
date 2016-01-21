@@ -23,13 +23,15 @@ defmodule SeatAvailabilityTest do
             _FlightKey: "FL1",
             Journey: [
               Time: "PT6H55M"
-            ]
+            ],
+            SegmentReferences: "SEG1 SEG2"
           ],
           Flight: [
             _FlightKey: "FL2",
             Journey: [
-              Time: "BLAH"
-            ]
+              Time: "PT6H55M"
+            ],
+            SegmentReferences: "SEG1 SEG2"
           ]
         ],
         FlightSegmentList: [
@@ -110,7 +112,7 @@ defmodule SeatAvailabilityTest do
       ]
     ]
 
-  test "Call AirShopping request" do
+  test "Call SeatAvialability request" do
     {status, _body} = NDCEx.request(:SeatAvailability, @seat_params)
     Logger.debug _body
     assert status == :ok
