@@ -136,14 +136,25 @@ defmodule NDCEx.Message.SeatAvailabilityRQ do
   defp flight_list(params) do
     Enum.map(params, fn item ->
       el = elem item, 1
-      element(:Flight, %{FlightKey: el[:_FlightKey]}, el)
+      element(:Flight, %{FlightKey: el[:_FlightKey]}, [
+        element(Journey: [
+          element(Time: el[:Journey][:Time])
+        ])
+      ])
     end)
   end
 
   defp flight_segment(params) do
     Enum.map(params, fn item ->
       el = elem item, 1
-      element(:FlightSegment, %{SegmentKey: el[:_SegmentKey]}, el)
+      element(:FlightSegment, %{SegmentKey: el[:_SegmentKey]}, [
+        element(Departure: el[:Departure]),
+        element(Arrival: el[:Arrival]),
+        element(MarketingCarrier: el[:MarketingCarrier]),
+        element(OperatingCarrier: el[:OperatingCarrier]),
+        element(Equipment: el[:Equipment]),
+        element(FlightDetail: el[:FlightDetail])
+      ])
     end)
   end
 end
