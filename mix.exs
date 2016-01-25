@@ -29,6 +29,7 @@ defmodule NDCExSdk.Mixfile do
   defp deps do
     [
       {:xml_builder, "0.0.8"},
+      {:exmerl, "~> 0.1.1"},
       {:pipe, "~> 0.0.2"},
       {:ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.2"},
       {:httpotion, "~> 2.1.0"},
