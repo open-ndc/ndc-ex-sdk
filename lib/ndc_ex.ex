@@ -1,6 +1,7 @@
 defmodule NDCEx do
   require HTTPotion
   require Logger
+  import SweetXml
   @acceptable_ndc_methods [ AirShopping: ["AirShoppingRQ", "AirShoppingRS"],
                             FlightPrice: ["FlightPriceRQ", "FlightPriceRS"],
                             SeatAvailability: ["SeatAvailabilityRQ", "SeatAvailabilityRS"],
@@ -22,24 +23,29 @@ defmodule NDCEx do
     |> rest_call_with_message(get_mix_config(:rest))
   end
 
-  def get_mix_config(key) when is_atom(key) do
-    Application.get_env(:ndc_ex_sdk, key)
-  end
-
   def rest_call_with_message(xml, rest_config) do
     try do
       case HTTPotion.post rest_config[:url], [body: xml, headers: rest_config[:headers]] do
-        %HTTPotion.Response{body: body, headers: headers, status_code: 200 } ->
-          {:ok, body}
-        %HTTPotion.Response{body: _body, headers: headers, status_code: status_code } ->
-          {:error, _body}
+        %HTTPotion.Response{body: body, headers: _headers, status_code: 200 } ->
+          {:ok, Exmerl.parse(body)}
+        %HTTPotion.Response{body: body, headers: _headers, status_code: _status_code } ->
+          {:error, Exmerl.parse(body)}
+          apply(NDCEx.Response.Error, :convert, [body])
         %HTTPotion.Response{status_code: 404} ->
-          {:error, "Request does not exist"}
+          {:error, error_message("Request does not exist")}
         _ ->
-          {:error, "Unknown error"}
+          {:error, error_message("Unknown Error")}
       end
     rescue
-      e -> {:error, e.message}
+      e -> {:error, error_message(e.message)}
     end
+  end
+
+  defp error_message(message) do
+    Exmerl.parse "<error><message>#{message}</message></error>"
+  end
+
+  def get_mix_config(key) when is_atom(key) do
+    Application.get_env(:ndc_ex_sdk, key)
   end
 end

@@ -23,7 +23,7 @@ defmodule ServiceListTest do
 
   test "Call ServiceList request" do
     {_, xml} = NDCEx.request(:AirShopping, @valid_core_query_params)
-		response_id = xml |> xpath(~x"//AirShoppingRQ/ShoppingResponseIDs/ResponseID/text()")
+		response_id = xml |> xpath(~x"//AirShoppingRS/ShoppingResponseIDs/ResponseID/text()")
 		params = [
 			ShoppingResponseIDs: [
 					ResponseID: response_id
