@@ -114,7 +114,7 @@ defmodule SeatAvailabilityTest do
 
   test "Call SeatAvialability request" do
     {status, _body} = NDCEx.request(:SeatAvailability, @seat_params)
-    Logger.debug _body
+    IO.inspect _body
     assert status == :ok
   end
 end
