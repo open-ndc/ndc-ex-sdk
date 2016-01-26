@@ -1,9 +1,10 @@
 defmodule ServiceListTest do
   require Logger
+  require Record
   use ExUnit.Case
-  require HTTPotion
   doctest NDCEx
-	import SweetXml
+  Record.defrecord :xmlElement, Record.extract(:xmlElement, from_lib: "xmerl/include/xmerl.hrl")
+  Record.defrecord :xmlText, Record.extract(:xmlText, from_lib: "xmerl/include/xmerl.hrl")
 
   @valid_core_query_params [
                   CoreQuery: [
@@ -23,15 +24,16 @@ defmodule ServiceListTest do
 
   test "Call ServiceList request" do
     {_, xml} = NDCEx.request(:AirShopping, @valid_core_query_params)
-		response_id = xml |> xpath(~x"//AirShoppingRS/ShoppingResponseIDs/ResponseID/text()")
+    [element] = :xmerl_xpath.string('/AirShoppingRS/ShoppingResponseIDs/ResponseID', xml)
+    [text] = xmlElement(element, :content)
+    response_id = xmlText(text, :value)
 		params = [
 			ShoppingResponseIDs: [
-					ResponseID: response_id
+					ResponseID: to_string(response_id)
 				]
 			]
 
 		{status, body} = NDCEx.request(:ServiceList, params)
-    IO.inspect params
     IO.inspect body
     assert status == :ok
   end
