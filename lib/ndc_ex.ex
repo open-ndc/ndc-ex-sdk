@@ -15,12 +15,16 @@ defmodule NDCEx do
                           ]
 
   def request(method, params) do
+    try do
     [request_name, response_name] = @acceptable_ndc_methods[method]
 
     :ndc
     |> get_mix_config
     |> NDCEx.Message.Base.build_document(request_name, params)
     |> rest_call_with_message(get_mix_config(:rest))
+    rescue
+      e -> {:error, error_message(e.message)}
+    end
   end
 
   def rest_call_with_message(xml, rest_config) do
