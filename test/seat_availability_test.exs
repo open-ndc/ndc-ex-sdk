@@ -1,7 +1,6 @@
 defmodule SeatAvailabilityTest do
   require Logger
   use ExUnit.Case
-  require HTTPotion
   doctest NDCEx
 
 	@seat_params  [
