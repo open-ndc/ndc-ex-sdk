@@ -7,7 +7,17 @@ defmodule NDCExSdk.Mixfile do
      elixir: "~> 1.2.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps,
+     package: [
+        maintainers: ["Zaali Kavelashvili"],
+        links: %{
+          "GitHub" => "https://github.com/open-ndc/ndc-ex-sdk"
+        }
+      ],
+      description: """
+          This is an Elixir package that wrapps any NDC-compliant API. It's host-agnostic and quite flexible-through-configuration so that it can reach NDC hosts with a certain flexibility
+        """
+    ]
   end
 
   # Configuration for the OTP application
