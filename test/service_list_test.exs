@@ -34,6 +34,7 @@ defmodule ServiceListTest do
 			]
 
 		{status, body} = NDCEx.request(:ServiceList, params)
+    IO.inspect status
     IO.inspect body
     assert status == :ok
   end

@@ -4,7 +4,8 @@ config :ndc_ex_sdk,
 
 label: "KRO",
 rest: [
-    url: "https://ndc-sandbox.herokuapp.com/api/v0/ndc/",
+    #url: "https://ndc-sandbox.herokuapp.com/api/v0/ndc/",
+    url: "http://0.0.0.0:9292/api/v0/ndc",
     headers: [
       "Accept": "application/xml",
       "Content-Type": "application/xml",
