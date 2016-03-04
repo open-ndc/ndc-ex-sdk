@@ -39,13 +39,13 @@ defmodule SeatAvailabilityTest do
             Departure: [
               AirportCode: "SXF",
               Date: "2016-03-01",
-              Time: "20:30"
+              Time: "12:00"
             ],
             Arrival: [
-              AirportCode: "MAD",
+              AirportCode: "FRA",
               Date: "2016-03-01",
-              Time: "23:10",
-              AirportName: "Madrid Adolfo Suárez International Airport"
+              Time: "13:10",
+              AirportName: "Frankfurt International Airport"
             ],
             MarketingCarrier: [
               AirlineID: "FA",
@@ -73,15 +73,15 @@ defmodule SeatAvailabilityTest do
           FlightSegment: [
             _SegmentKey: "SEG2",
             Departure: [
-              AirportCode: "SXF",
+              AirportCode: "FRA",
               Date: "2016-03-01",
-              Time: "20:30",
-              AirportName: "Berlin Schönefeld"
+              Time: "14:00",
+              AirportName: "Frankfurt International Airport"
             ],
             Arrival: [
               AirportCode: "MAD",
               Date: "2016-03-01",
-              Time: "23:10",
+              Time: "16:35",
               AirportName: "Madrid Adolfo Suárez International Airport"
             ],
             MarketingCarrier: [
